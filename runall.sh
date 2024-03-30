@@ -5,29 +5,19 @@ results=""
 failures=0
 
 run_and_accumulate() {
-  if ./run.sh "$1"; then
-    results+="Success: $1\n"
+  if ./run.sh "$1" > /dev/null; then
+    results+="\e[32mSuccess:\e[0m $1\n"
   else
-    results+="Failure: $1\n"
+    results+="\e[31mFailure:\e[0m $1\n"
     failures=$((failures + 1))
   fi
 }
 
-run_and_accumulate addr
-run_and_accumulate assign
-run_and_accumulate decl
-run_and_accumulate float
-run_and_accumulate for
-run_and_accumulate fn
-run_and_accumulate if
-run_and_accumulate i32
-run_and_accumulate import
-run_and_accumulate libc
-run_and_accumulate logical
-run_and_accumulate math
-run_and_accumulate ptr
-run_and_accumulate structdecl
-run_and_accumulate while
+for path in test_src/*.w; do
+  file=$(basename "$path")
+  filename="${file%.*}"
+  run_and_accumulate "$filename"
+done
 
 echo "Results:"
 echo -e "$results"
