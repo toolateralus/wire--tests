@@ -3,13 +3,10 @@ extern {
   void exit(i32 v),
 };
 
-mut i32 x = 10;
+mut i32 x = 1;
 
 void main() {
-  x = 5;
+  x = 0
 }
-
 main();
-
 exit(x);
-
